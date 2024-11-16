@@ -1,0 +1,75 @@
+﻿@using KhaKhau.Models;
+@model TopSoldProductByDate;
+@{
+    ViewData["Title"] = "TopFiveSellingProducts";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<h3>Món bán chạy</h3>
+@if (Model != null)
+{
+    <div>
+        <form class="my-2 d-flex" style="gap:5px" asp-action="TopFiveSellingProducts" method="get">
+            <input type="date" style="width: 200px;" class="form-control" name="sDate" />
+            <input type="date" style="width: 200px;" class="form-control" name="eDate" />
+            <button class="btn btn-primary">Filter</button>
+            <a class="btn btn-primary" asp-area="Admin" asp-action="TopFiveSellingProducts" >Clear</a>
+        </form>
+
+        <h6 style="color:green">Trả kết quả tìm kiếm từ ngày @Model.StartDate.ToString("dd-MM-yyyy") đến @Model.EndDate.ToString("dd-MM-yyyy")</h6>
+
+        @if (Model.TopSoldProducts.Count() == 0)
+        {
+            <div class="my-3" style="font-size:16px; font-weight:bold; color:red">
+                Không có kết quả
+            </div>
+        }
+        else
+        {
+            
+            <table style="width: 50%;" class="table table-striped">
+                <thead>
+                <th>STT</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng đã bán</th>
+                    <th>Hình</th>
+                    <th>Chi tiết</th>
+                    <th>Thêm</th>
+                </thead>
+
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var item in Model.TopSoldProducts)
+                    {
+                        <tr>
+                            <td>@i
+                            <td>@item.Name
+                            <td>@item.TotalUnitSold</td>
+                            <td>
+                                <img src="@item.ImageUrl" style="width:100px" />
+                                </td>
+                                <td>
+                                <a role="button" class="btn btn-dark" asp-controller="ProductManager" asp-action="Display" asp-route-id="@item.Id">
+									<small style="white-space:nowrap"> Chi tiết</small>
+                                    </a>
+                                </td>
+                                <td>
+                                <a role="button" class="btn btn-dark" asp-controller="Stock" asp-action="ManangeStock" asp-route-productId="@item.Id">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+}
+else
+{
+    <h4>Có lỗi xảy ra</h4>
+}
+
+

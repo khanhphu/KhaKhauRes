@@ -1,0 +1,221 @@
+﻿
+@{
+    ViewData["Title"] = "Danh sach mon an";
+}
+
+@* <link href="~/css/site.css" rel="stylesheet" />
+ *@
+
+ @model IEnumerable<KhaKhau.Areas.Admin.Models.Product>
+ <div class="container-fluid"></div>
+<h4>
+    <a class="d-inline-block nav-link"  href="/admin/ProductManager">
+        Admin
+    </a>
+    >
+    <a asp-area="Admin" asp-controller="ProductManager" asp-action="Index">
+        Danh sách món
+    </a>
+</h4>
+<a class="nav-link mb-1" id="btn-create" asp-area="Admin" asp-controller="ProductManager" asp-action="Add" >Create New</a>
+<style>
+    #btn-create{
+        width: fit-content;
+        height: fit-content;
+        text-align: center;
+        border: none;
+        border-radius: 5px;
+        background-color: chocolate;
+        font-size: 18px;
+        color:white;
+    }
+</style>
+@* <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Description</td>
+                <td>@product.Category?.Name</td>
+                <td>
+                    @if(@product.ImageUrl != null)
+                    {
+                        <img src="@product.ImageUrl" alt="Product Images" style="max-width:100px" />
+
+                    }
+                    else
+                    {
+                      <a href="#" role="button" class="btn btn-danger btn-circle btn-sm">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </a> 
+                    }
+                </td>
+                <td>
+                    <a  class="btn btn-info" asp-action="Display" asp-route-id="@product.Id">View</a> 
+                    <a class="btn btn-success" asp-action="Update" asp-route-id="@product.Id">Edit</a> 
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> 
+<style>
+   
+</style>*@
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+<div class="container-fluid">
+
+   
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h5>Thông tin tìm kiếm</h5>
+            <!--phân hai vùng-->
+            <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div id="dataTable_filter" class="dataTables_filter">
+                    <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label>
+                    </div>
+                    </div>
+                <div class="col-sm-12 col-md-6">
+                    <h6 style="color:chocolate"><i class="fas fa-solid fa-filter"></i></h6>
+                    <input type="date" id="birthday" name="ngaydat">
+                    <input type="submit" value="Submit">
+                </div>
+
+                    </div>
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên món</th>
+                            <th>Giá</th>
+                            <th>Mô tả</th>
+                            <th>Loại</th>
+                            <th>Hình</th>
+                            <th>Tùy chỉnh</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên món</th>
+                            <th>Giá</th>
+                            <th>Mô tả</th>
+                            <th>Loại</th>
+                            <th>Hình</th>
+                            <th>Tùy chỉnh</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @{
+                            int i = 1;
+                         
+                        @foreach (var product in Model)
+                        {
+                                
+
+                            <tr>
+                                <td>@i</td>
+                                <td>@product.Name</td>
+                                <td>@product.Price</td>
+                                <td>@product.Description</td>
+                                <td>@product.Category?.Name</td>
+                                <td>
+                                    @if (@product.ImageUrl != null)
+                                    {
+                                        <img src="@product.ImageUrl" alt="Product Images" style="max-width:100px" />
+
+                                    }
+                                    else
+                                    {
+                                        <a href="#" role="button" class="btn btn-danger btn-circle btn-sm">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                        </a>
+                                    }
+                                </td>
+                                <td>
+                                    <a class="btn btn-info" asp-action="Display" asp-route-id="@product.Id">View</a>
+                                    <a class="btn btn-success" asp-action="Update" asp-route-id="@product.Id">Edit</a>
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                                </td>
+                                </tr>
+                                i++;
+                            }
+                        
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+<div class="row">
+    <div class="col-sm-12 col-md-5">
+        <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+            Showing 1 to 10 of 57 entries</div>
+            </div><div class="col-sm-12 col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                    <ul class="pagination">
+                        <li class="paginate_button page-item previous disabled" id="dataTable_previous">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                            </li><li class="paginate_button page-item active">
+                                <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                                </li>
+                                <li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                                    </li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a>
+                                        </li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a>
+                                            </li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
+                                            <li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
+<!-- End of Main Content -->
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; KhaKhau</span>
+        </div>
+    </div>
+</footer>
+
+<script src="/admin/vendor/jquery/jquery.min.js"></script>
+<script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/admin/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="/admin/js/demo/datatables-demo.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
